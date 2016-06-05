@@ -17,6 +17,10 @@
         <p>
           {% trans "Stuck with your Sudoku puzzle? Use my solver to solve any puzzle!" %}
         </p>
+        <p class="text-navy">
+          <i class="fa fa-info-circle" aria-hidden="true"></i>
+          {% trans "Tip: you can use arrows to navigate." %}
+        </p>
         <p>{% trans "How does it work?" %}</p>
         <p>
           {% trans "I wrote a small program in Python overnight, and made an online version available using the Django framework." %}
@@ -32,9 +36,15 @@
       <div class="col-md-6">
         <div class="ibox-content">
           {% if solved %}
-            <p class="text-success">I solved the puzzle for you. Here is a solution:</p>
+            <p class="text-success">
+              <i class="fa fa-check-circle" aria-hidden="true"></i>
+              {% trans "I solved this puzzle for you. Here is the solution:" %}
+            </p>
           {% elif action == "solve" %}
-            <p class="text-danger">{% trans "Your puzzle seems to be invalid or incomplete!" %}</p>
+            <p class="text-danger">
+              <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+              {% trans "Your puzzle seems to be invalid or incomplete!" %}
+            </p>
           {% endif %}
             <form class="m-t" role="form" method="post" action="{% url 'home' %}">
             {% csrf_token %}
@@ -71,5 +81,50 @@
   </div>
   <script src="{% static 'js/jquery-2.1.1.js' %}"></script>
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script>
+  $(function() {
+    $('input[type=number]').on('keydown', function(e) {
+      var k = e.which;
+      var p = parseInt($(this).attr('name').match(/form-(\d+)-value/)[1]);
+
+      custom_action = true;
+      // escape
+      if (k == 27) {
+        $(this).blur();
+      }
+      // arrow ‘up’
+      else if (k == 38) {
+        if (p > 8) {
+          $('input[type=number][name=form-' + (p - 9) + '-value]').focus();
+        }
+      }
+      // arrow ‘down’
+      else if (k == 40) {
+        if (p < 72) {
+          $('input[type=number][name=form-' + (p + 9) + '-value]').focus();
+        }
+      }
+      // arrow ‘right’
+      else if (k == 39) {
+        if (p % 9 < 8) {
+          $('input[type=number][name=form-' + (p + 1) + '-value]').focus();
+        }
+      }
+      // arrow ‘left’
+      else if (k == 37) {
+        if (p % 9 > 0) {
+          $('input[type=number][name=form-' + (p - 1) + '-value]').focus();
+        }
+      }
+      else {
+        custom_action = false;
+      }
+
+      if (custom_action) {
+        e.preventDefault();
+      }
+    });
+  });
+  </script>
 </body>
 </html>
