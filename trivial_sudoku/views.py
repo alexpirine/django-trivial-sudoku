@@ -37,6 +37,8 @@ def home(request):
             for k, f in enumerate(form):
                 if not bool(user_data[k]):
                     f.fields['value'].widget.attrs['class'] += ' text-success'
+                else:
+                    f.fields['value'].widget.attrs['class'] += ' font-bold'
             solved = True
 
     c = {
