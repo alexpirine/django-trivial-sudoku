@@ -26,12 +26,16 @@
           {% trans "I wrote a small program in Python overnight, and made an online version available using the Django framework." %}
         </p>
         <p>
-          {% trans "Want to know more?" %}
+          {% trans "Want to know how it's made? It's open source!" %}
         </p>
         <ul>
-          <li><a href="https://github.com/alexpirine/django-trivial-sudoku">{% trans "View the Django project on Github" %}</a></li>
-          <li><a href="https://github.com/alexpirine/python-trivial-sudoku">{% trans "View the Python solver on Github" %}</a></li>
+          <li><a href="https://github.com/alexpirine/django-trivial-sudoku"><i class="fa fa-github"></i> {% trans "Django project on Github" %}</a></li>
+          <li><a href="https://github.com/alexpirine/python-trivial-sudoku"><i class="fa fa-github"></i> {% trans "Python solver on Github" %}</a></li>
         </ul>
+        <p>
+          {% trans "You just want to quickly test my service without enterting an actual puzzle?" %}
+          <a href="{% url 'home' %}?suggest=1">{% trans "Generate a puzzle automatically!" %}</a>
+        </p>
       </div>
       <div class="col-md-6">
         <div class="ibox-content">
@@ -74,7 +78,7 @@
     </div>
     <hr/>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-12">
         <a href="http://netica.fr/">Copyright © Netica, 2016</a>
       </div>
     </div>

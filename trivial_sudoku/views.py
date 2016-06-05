@@ -3,6 +3,7 @@
 
 import itertools
 import re
+import sudokumaker
 
 from django.contrib import messages
 from django.shortcuts import render
@@ -13,11 +14,17 @@ from . import forms
 
 def home(request):
     action = request.POST.get('action', None)
+    suggest = request.GET.get('suggest', False)
     matrix = request.POST.getlist('matrix')
     solution = None
 
     solved = False
-    form = forms.SudokuForm(request.POST or None)
+
+    initial_data = None
+    if suggest:
+        matrix = sudokumaker.make_problem()
+        initial_data = [{'value': v or None} for k, v in enumerate(itertools.chain.from_iterable(matrix))]
+    form = forms.SudokuForm(request.POST or None, initial=initial_data)
 
     if action == 'solve' and form.is_valid():
         user_data = [v['value'] or 0 for v in form.cleaned_data]
