@@ -1,5 +1,5 @@
 # django-trivial-sudoku
 
-A Django website with a sudoku solver
+A Django website with a sudoku solver.
 
-Try it online: http://sudoku.netica.fr/
+If it works on your machine, you can probalby deploy it, it doesn't require much in terms of infrastructure.
